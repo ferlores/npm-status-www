@@ -1,0 +1,28 @@
+{
+  "name": "npm-status",
+  "version": "0.0.0",
+  "description": "NPM status webpage",
+  "main": "npm.js",
+  "dependencies": {
+    "microtime": "~0.3.1",
+    "mongodb": "~1.1.7",
+    "connect": "~2.4.6",
+    "socket.io": "~0.9.10",
+    "request": "~2.11.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node npm.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "some"
+  },
+  "author": "Fernando Lores <ferlores@gmail.com>",
+  "license": "MIT",
+  "subdomain": "npm-status",
+  "engines": {
+    "node": "0.8.x"
+  }
+}

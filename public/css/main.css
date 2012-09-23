@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #C3BDB3;
+  border-top: solid 6px #CC3D33;
+  text-align: center;
+  font: 36px Georgia, serif;
+  color: #666;
+}
+
+#logo {
+  margin-top: 80px;
+  width: 400px;
+}
+
+#statusbox {
+  width: 360px;
+  height: 185px;
+  margin: 60px auto;
+  padding: 10px 20px;
+  background-color: #F4F4F2;
+}
+
+#registry {
+  font-size: 24px;
+  float: left;
+  width: 160px;
+  margin-top: 15px;
+}
+
+#website {
+  font-size: 24px;
+  float: right;
+  width: 160px;
+  margin-top: 15px;
+}
+
+.pending {
+  background: url('/img/yellow.png') no-repeat 12px 6px;
+}
+
+.ok {
+  background: url('/img/green.png') no-repeat 12px 6px;
+}
+
+.fail {
+  background: url('/img/red.png') no-repeat 12px 6px;
+}
+
+.status {
+  text-align: center;
+  font-size: 14px;
+}
+
+#statusbox .title{
+  border-bottom: 1px solid #000;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+  color: #CC3D33;
+}
+
+#credits {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 16px;
+}
+
+.note {
+  float: right;
+  clear: both;
+  font-size: 12px;
+  margin: 20px -20px 0 0; 
+  width: 150px;
+  font-style: italic;
+  color: #666;
+  text-align: right;
+}
