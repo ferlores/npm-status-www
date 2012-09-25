@@ -49,14 +49,13 @@ io.set('log level', 1)
 
 io.sockets.on('connection', function (socket) {
   db.collection('status', function (err, collection) {
-    collection.find({action: 'registry'}).sort({'time': -1}).limit(1)
-      .nextObject(function(err, results) {
-        socket.emit('update', results)
-      });
 
-    collection.find({action: 'website'}).sort({'time': -1}).limit(1)
-      .nextObject(function(err, results) {
-        socket.emit('update', results)
-      });
+    ['registry', 'website'].forEach(function (action){
+      collection.find({action: action}).sort({'time': -1}).limit(1)
+        .nextObject(function(err, results) {
+          socket.emit('update', results)
+        });
+    })
+    
   })
 });
