@@ -3,36 +3,42 @@ body {
   padding: 0;
   background: #C3BDB3;
   border-top: solid 6px #CC3D33;
-  text-align: center;
-  font: 36px Georgia, serif;
+  font: 2em Arial;
   color: #666;
 }
 
-#logo {
-  margin-top: 80px;
+#logo img{
   width: 400px;
+}
+
+#logo{
+  float: left;
 }
 
 #statusbox {
   width: 360px;
   height: 185px;
-  margin: 60px auto;
+  margin: 60px 0;
   padding: 10px 20px;
   background-color: #F4F4F2;
+  float: left;
+  clear: left;
 }
 
 #registry {
-  font-size: 24px;
+  font-size: 0.75em;
   float: left;
   width: 160px;
   margin-top: 15px;
+  text-align: center;
 }
 
 #website {
-  font-size: 24px;
+  font-size: 0.75em;
   float: right;
   width: 160px;
   margin-top: 15px;
+  text-align: center;
 }
 
 .pending {
@@ -52,9 +58,11 @@ body {
   font-size: 14px;
 }
 
-#statusbox .title{
-  border-bottom: 1px solid #000;
+.title{
+  border-bottom: 1px solid #666;
+  font-weight: 800;
   color: black;
+  text-align: center;
 }
 
 a {
@@ -66,6 +74,14 @@ a {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  font-size: 14px;
+  text-align: right;
+}
+
+#improve {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
   font-size: 16px;
 }
 
@@ -73,9 +89,53 @@ a {
   float: right;
   clear: both;
   font-size: 12px;
-  margin: 20px -20px 0 0; 
+  margin: 25px -20px 0 0; 
   width: 150px;
   font-style: italic;
   color: #666;
   text-align: right;
+}
+
+.main {
+  margin: 80px auto;
+  width: 750px;
+}
+
+/**************** twits ***********/
+#twits {
+  background-color: #F4F4F2;
+  color: #000;
+  padding: 10px 10px 20px 20px;
+  float: right;
+}
+
+#twits .content{
+  font-size: 14px;
+  width: 280px;
+  height: 352px;
+  overflow: auto;
+  color: #666;
+}
+
+.twit {
+  padding: 5px;
+  min-height: 57px;
+  width: auto;
+  border-bottom: 1px solid #666;
+}
+.twit img {
+  float: left;
+  margin: 5px 8px 15px 0;
+}
+.twit .text {
+  margin: 0;
+  text-align: left;
+}
+.twit .time a {
+  color: #666;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.twit .time a:hover {
+  text-decoration: underline;
 }
