@@ -1,8 +1,5 @@
 var connect = require('connect')
   , fs = require('fs')
-  , dirSamples = __dirname + '/samples/'
-  , interval = 5 * 60 * 1000
-  , samples = []
   , keys = {
       'consumer_key': process.env.consumer_key
     , 'consumer_secret' : process.env.consumer_secret
@@ -10,6 +7,10 @@ var connect = require('connect')
     , 'access_token_secret': process.env.access_token_secret
   }
   , tu = require('tuiter')(keys)
+  , samples = []
+  , lastSample = []
+  , dirSamples = __dirname + '/samples/'
+  , interval = 5 * 60 * 1000
   , timeline = 309528017 // @npmjs
 
   
@@ -27,6 +28,7 @@ var db = require('./db')(check)
 function check(err, collection) {
   if (err) throw new Error('Error reading database')
 
+  lastSample = []
   samples.forEach(function (fn) {
     fn({}, saveData)
   })
@@ -43,9 +45,9 @@ function saveData(sample) {
     })
   })
 
+  lastSample.push(sample)
   io.sockets.emit('update', sample)
 }
-
 
 /****************************************************************************/
 
@@ -57,18 +59,12 @@ var app = connect()
 io.set('log level', 1)
 
 io.sockets.on('connection', function (socket) {
-  // emit data
-  db.collection('status', function (err, collection) {
-    ['registry', 'website'].forEach(function (action){
-      collection.find({action: action}).sort({'time': -1}).limit(1)
-        .nextObject(function(err, results) {
-          socket.emit('update', results)
-        })
-    })
+  lastSample.forEach(function (sample){
+    socket.emit('update', sample)
   })
+
   socket.emit('twit', twits)  
 })
-
 
 var twits = []
 twits.push = function (twit) {
