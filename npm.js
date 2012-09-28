@@ -91,7 +91,8 @@ tu.userTimeline({screen_name: 'npmjs'}, function (er, res) {
 // Connect a stream for incomming tweets 
 tu.filter({follow: [timeline]}, function (stream) {
   stream.on('tweet', function (tweet) {
-    if(tweet.user && tweet.user.id === timeline) 
+    if(!tweet.user) return console.log(tweet)
+    if(tweet.user.id === timeline) 
       twits.push(extractTweet(tweet))
   })
 })
