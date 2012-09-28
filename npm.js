@@ -10,6 +10,7 @@ var connect = require('connect')
     , 'access_token_secret': process.env.access_token_secret
   }
   , tu = require('tuiter')(keys)
+  , timeline = 309528017 // @npmjs
 
   
 /*****************************************************************************/
@@ -91,9 +92,10 @@ tu.userTimeline({screen_name: 'npmjs'}, function (er, res) {
   })
 })
 
-// 179132846 my twitterID for testing
-tu.filter({follow: ['309528017']}, function (stream) {
+// Connect a stream for incomming tweets 
+tu.filter({follow: [timeline]}, function (stream) {
   stream.on('tweet', function (tweet) {
-    twits.push(extractTweet(tweet))
+    if(tweet.user && tweet.user.id === timeline) 
+      twits.push(extractTweet(tweet))
   })
 })
