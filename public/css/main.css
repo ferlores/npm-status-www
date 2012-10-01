@@ -101,6 +101,15 @@ a {
   width: 750px;
 }
 
+.pingdom {
+  font-size: 15px;
+  font-weight: 800;
+  float: right;
+  clear: both;
+  width: 100%;
+  text-align: center;
+  margin-top: -5px;
+}
 /**************** twits ***********/
 #twits {
   background-color: #F4F4F2;
