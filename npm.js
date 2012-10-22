@@ -6,7 +6,8 @@ var connect = require('connect')
     , 'access_token_key' : process.env.access_token_key
     , 'access_token_secret': process.env.access_token_secret
   }
-  , tu = require('tuiter')(keys)
+  , Tuiter = require('tuiter')
+  , tu = new Tuiter(keys)
   , samples = []
   , lastSample = []
   , dirSamples = __dirname + '/samples/'
