@@ -9,7 +9,7 @@ db.pathname = db.pathname.replace('/', '')
 db.auth = db.auth ? db.auth.split(':') : undefined
 db.port = db.port ? parseInt(db.port, 10) : undefined
 
-client = new mongo.Db(db.pathname, new mongo.Server(db.hostname, db.port, {}))
+client = new mongo.Db(db.pathname, new mongo.Server(db.hostname, db.port, {}), {safe: false})
 
 module.exports = function (callback) {
   client.open(function(err, p_client) {
