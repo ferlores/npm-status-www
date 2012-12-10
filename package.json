@@ -3,14 +3,16 @@
   "version": "0.0.1",
   "description": "NPM status webpage",
   "main": "npm.js",
-  "domains": ["status.npmjs.org"],
+  "domains": [
+    "status.npmjs.org"
+  ],
   "dependencies": {
     "microtime": "~0.3.1",
     "mongodb": "~1.1.7",
     "connect": "~2.4.6",
     "socket.io": "~0.9.10",
     "request": "~2.11.4",
-    "tuiter": "~0.2.0"
+    "tuiter": "0.2.2"
   },
   "devDependencies": {},
   "scripts": {
