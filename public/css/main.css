@@ -107,7 +107,7 @@ a {
 }
 
 .main {
-  margin: 80px auto;
+  margin-top: 80px;
   /*width: 750px;*/
 }
 .pingdom-container {
