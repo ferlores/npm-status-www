@@ -8,35 +8,36 @@ body {
 }
 
 #logo img{
-  width: 400px;
+  /*width: 400px;*/
+  margin:0 auto;
 }
 
 #logo{
-  float: left;
+  /*float: left;*/
 }
 
 #statusbox {
-  width: 360px;
-  height: 185px;
-  margin: 60px 0;
+  /*width: 360px;*/
+  min-height: 185px;
+  margin: 60px 0 10px 0;
   padding: 10px 20px;
   background-color: #F4F4F2;
-  float: left;
-  clear: left;
+  /*float: left;*/
+  /*clear: left;*/
 }
 
 #registry {
   font-size: 0.75em;
-  float: left;
-  width: 160px;
+  /*float: left;*/
+  /*width: 160px;*/
   margin-top: 15px;
   text-align: center;
 }
 
 #website {
   font-size: 0.75em;
-  float: right;
-  width: 160px;
+  /*float: right;*/
+  /*width: 160px;*/
   margin-top: 15px;
   text-align: center;
 }
@@ -72,10 +73,18 @@ a {
 
 #credits {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 0px;
+  right: 0px;
+  left:0;
   font-size: 14px;
   text-align: right;
+  padding:10px;
+}
+@media (max-width : 640px) {
+  #credits{
+    position: relative;
+    text-align: center;
+  }
 }
 
 #improve {
@@ -86,11 +95,12 @@ a {
 }
 
 .note {
-  float: right;
-  clear: both;
+  /*float: right;*/
+  /*clear: both;*/
   font-size: 12px;
-  margin: 25px -20px 0 0; 
-  width: 150px;
+  margin-bottom:10px;
+  /*margin: 25px -20px 0 0; */
+  /*width: 150px;*/
   font-style: italic;
   color: #666;
   text-align: right;
@@ -98,30 +108,37 @@ a {
 
 .main {
   margin: 80px auto;
-  width: 750px;
+  /*width: 750px;*/
 }
-
+.pingdom-container {
+  text-align: center;
+  margin-top:20px;
+}
 .pingdom {
   font-size: 15px;
   font-weight: 800;
-  float: right;
-  clear: both;
+  /*float: right;*/
+  /*clear: both;*/
   width: 100%;
   text-align: center;
-  margin-top: -5px;
+  /*margin-top: -5px;*/
 }
+.status-link a{
+  font-size:1.5em;
+}
+
 /**************** twits ***********/
 #twits {
   background-color: #F4F4F2;
   color: #000;
   padding: 10px 10px 20px 20px;
-  float: right;
+ /* float: right;*/
 }
 
 #twits .content{
   font-size: 14px;
-  width: 280px;
-  height: 352px;
+  /*width: 280px;*/
+  height: 394px;
   overflow: auto;
   color: #666;
 }
