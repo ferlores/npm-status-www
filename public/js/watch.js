@@ -5,9 +5,12 @@ $(document).ready(function () {
   })
 
   socket.on('twit', function (data) {
+    console.log('twit')
     if (!$.isArray(data)) data = [data]
+    $content = $('#twits .content');
+    $content.html('')
     $.each(data, function (idx, twit) {
-      $('#twits .content').prepend($(renderTwit(twit)))
+       $content.prepend($(renderTwit(twit)))
     })
   })
 })

@@ -7,6 +7,9 @@ var connect = require('connect')
     , 'access_token_secret': process.env.access_token_secret
   }
   , tu = require('tuiter')(keys)
+  , async = require('async')
+  , _ = require('underscore')
+  , moment = require('moment')
   , samples = []
   , lastSample = []
   , dirSamples = __dirname + '/samples/'
@@ -114,13 +117,33 @@ var extractTweet = function (tweet) {
 // Get the last 20 twits
 function getTwits () {
   console.log('refreshing tweets');
-  tu.userTimeline({screen_name: 'npmjs'}, function (er, res) {
-    if (er) console.log(er)
-
-    twits = []
-    res.forEach(function (tweet) {
-      twits.unshift(extractTweet(tweet))
-    })
+  twits = []
+  async.series([
+    function(cb){
+      tu.userTimeline({screen_name: ['npmjs']}, function (er, res) {
+        if (er) console.log(er)
+        res.forEach(function (tweet) {
+          twits.unshift(extractTweet(tweet))
+        });
+       cb();
+      });
+    },
+    function(cb){
+      tu.userTimeline({screen_name: ['iriscouch']}, function (er, res) {
+        if (er) console.log(er)
+        res.forEach(function (tweet) {
+          twits.unshift(extractTweet(tweet))
+        });
+        cb();
+      });
+    }
+  ], function(){
+    //done
+    // sort tweets by creation time
+    // console.log('DONE')
+    twits = _.sortBy(twits, function(obj){ return moment(obj.created_at).unix(); });
+    // console.log(twits)
+    io.sockets.emit('twit', twits) 
   })
 }
 
@@ -129,14 +152,15 @@ setInterval(getTwits, 5 * 60 * 1000);
 getTwits()
 
 // Connect a stream for incomming tweets 
-tu.filter({follow: [timeline]}, function (stream) {
-  stream.on('tweet', function (tweet) {
-    if(!tweet.user) return console.log(tweet)
-    if(tweet.user.id === timeline) 
-      twits.push(extractTweet(tweet))
-  })
+// tu.filter({follow: [timeline]}, function (stream) {
+//   stream.on('tweet', function (tweet) {
+//     console.log('TWEET TWEEET')
+//     if(!tweet.user) return console.log(tweet)
+//     if(tweet.user.id === timeline) 
+//       twits.push(extractTweet(tweet))
+//   })
 
-  stream.on('error', function (err) {
-    console.log('Error on tweeter stream: ', err, arguments)
-  })
-})
+//   stream.on('error', function (err) {
+//     console.log('Error on tweeter stream: ', err, arguments)
+//   })
+// })
