@@ -78,6 +78,7 @@ var extractTweet = function (tweet) {
     , id: tweet.id 
     , text: tweet.text 
     , profile_image_url: tweet.user.profile_image_url
+    , created_at: tweet.created_at
   }
 }
 

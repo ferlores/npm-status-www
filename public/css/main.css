@@ -27,36 +27,44 @@ body {
 }
 
 #registry {
-  font-size: 0.75em;
   /*float: left;*/
   /*width: 160px;*/
   margin-top: 15px;
-  text-align: center;
+  text-align:left;
+  padding-left: 45px;
+  font-size:1em;
 }
 
 #website {
-  font-size: 0.75em;
   /*float: right;*/
   /*width: 160px;*/
   margin-top: 15px;
-  text-align: center;
+  text-align: left;
+  padding-left: 45px;
+  font-size:1em;
 }
 
 .pending {
-  background: url('/img/yellow.png') no-repeat 12px 6px;
+  background: url('/img/yellow.png') no-repeat 12px 10px;
 }
-
+.pending a{
+  color:rgba(250,202,38,1);
+}
 .ok {
-  background: url('/img/green.png') no-repeat 12px 6px;
+  background: url('/img/green.png') no-repeat 12px 10px;
 }
-
+.ok a{
+  color:rgba(51,186,46,1);
+}
 .fail {
-  background: url('/img/red.png') no-repeat 12px 6px;
+  background: url('/img/red.png') no-repeat 12px 10px;
 }
-
+.fail a{
+  color:rgba(248,34,34,1);
+}
 .status {
-  text-align: center;
-  font-size: 14px;
+  margin-top:5px;
+  font-size: 16px;
 }
 
 .title{
@@ -64,6 +72,7 @@ body {
   font-weight: 800;
   color: black;
   text-align: center;
+  padding-bottom:5px;
 }
 
 a {
@@ -72,20 +81,11 @@ a {
 }
 
 #credits {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  left:0;
   font-size: 14px;
   text-align: right;
-  padding:10px;
+  padding:15px;
 }
-@media (max-width : 640px) {
-  #credits{
-    position: relative;
-    text-align: center;
-  }
-}
+
 
 #improve {
   position: fixed;
@@ -123,6 +123,7 @@ a {
   text-align: center;
   /*margin-top: -5px;*/
 }
+
 .status-link a{
   font-size:1.5em;
 }
@@ -131,14 +132,14 @@ a {
 #twits {
   background-color: #F4F4F2;
   color: #000;
-  padding: 10px 10px 20px 20px;
+  padding: 10px;
  /* float: right;*/
 }
 
 #twits .content{
   font-size: 14px;
   /*width: 280px;*/
-  height: 394px;
+  height: 409px;
   overflow: auto;
   color: #666;
 }
@@ -164,4 +165,21 @@ a {
 }
 .twit .time a:hover {
   text-decoration: underline;
+}
+.time{
+  display:inline-block;
+  margin-top:5px;
+}
+.text-italic{
+  font-style:italic;
+}
+
+/****** MEDIA QUERIES ******/
+@media (max-width : 640px) {
+  #credits{
+    text-align: center;
+  }
+  #website, #registry{
+    /*text-align: center*/
+  }
 }
