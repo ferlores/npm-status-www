@@ -72,11 +72,40 @@ twits.push = function (twit) {
   io.sockets.emit('twit', twit)
 }
 
+var parseTweet = function(text){
+  // Parse URIs
+  text = text.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/, function(uri){
+    var link = '<a href="'+uri+'" target="_blank">'+uri+'</a>'
+    var len = uri.length
+    var lastChar = uri.substring(len-1, len);
+    if(lastChar == '.'){
+      uri = uri.substring(0, len-1)
+      link = '<a href="'+uri+'" target="_blank">'+uri+'</a>.'
+    }
+    
+    return link
+  });
+  
+  // Parse Twitter usernames
+  text = text.replace(/[@]+[A-Za-z0-9-_]+/g, function(u){
+    var username = u.replace("@", "")
+    return '<a href="http://twitter.com/' + username + '" target="_blank">'+u+'</a>'
+  })
+  
+  // Parse Twitter hash tags
+  text = text.replace(/[#]+[A-Za-z0-9-_]+/g, function(t){
+    var tag = t.replace("#", "%23")
+    return '<a href="http://twitter.com/search?q=' + tag + '" target="_blank">'+t+'</a>'
+  })
+
+  return text;
+};
+
 var extractTweet = function (tweet) {
   return {
       screen_name: tweet.user.screen_name
     , id: tweet.id 
-    , text: tweet.text 
+    , text: parseTweet(tweet.text)
     , profile_image_url: tweet.user.profile_image_url
     , created_at: tweet.created_at
   }
