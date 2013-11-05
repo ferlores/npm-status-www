@@ -47,21 +47,15 @@ body {
 .pending {
   background: url('/img/yellow.png') no-repeat 12px 10px;
 }
-.pending a{
-  color:rgba(250,202,38,1);
-}
+
 .ok {
   background: url('/img/green.png') no-repeat 12px 10px;
 }
-.ok a{
-  color:rgba(51,186,46,1);
-}
+
 .fail {
   background: url('/img/red.png') no-repeat 12px 10px;
 }
-.fail a{
-  color:rgba(248,34,34,1);
-}
+
 .status {
   margin-top:5px;
   font-size: 16px;
