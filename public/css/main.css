@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'icomoon';
+  src:url('/fonts/icomoon/icomoon.eot');
+  src:url('/fonts/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/icomoon/icomoon.ttf') format('truetype'),
+    url('/fonts/icomoon/icomoon.woff') format('woff'),
+    url('/fonts/icomoon/icomoon.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 body {
   margin: 0;
   padding: 0;
@@ -8,54 +18,61 @@ body {
 }
 
 #logo img{
-  width: 400px;
+  margin:0 auto;
 }
-
-#logo{
-  float: left;
-}
-
 #statusbox {
-  width: 360px;
-  height: 185px;
-  margin: 60px 0;
+  min-height: 185px;
+  margin: 60px 0 10px 0;
   padding: 10px 20px;
   background-color: #F4F4F2;
-  float: left;
-  clear: left;
+
 }
 
-#registry {
-  font-size: 0.75em;
-  float: left;
-  width: 160px;
+#registry, #website  {
   margin-top: 15px;
-  text-align: center;
+  text-align:left;
+  font-size:1em;
+
 }
 
-#website {
-  font-size: 0.75em;
-  float: right;
-  width: 160px;
-  margin-top: 15px;
-  text-align: center;
-}
+.icon {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-.pending {
-  background: url('/img/yellow.png') no-repeat 12px 6px;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size:1.8em;
 }
-
-.ok {
-  background: url('/img/green.png') no-repeat 12px 6px;
+.pending .icon{
+  color:#CCCB30;
 }
-
-.fail {
-  background: url('/img/red.png') no-repeat 12px 6px;
+.pending .icon:before {
+  content: "\e602";
+}
+.ok .icon{
+  color:#3FCC30;
+}
+.ok .icon:before {
+  content: "\e600";
+}
+.fail .icon {
+  color:#CB3837;
+  font-size:1.4em;
+  margin-top:6px;
+}
+.fail .icon:before {
+  content: "\e601";
 }
 
 .status {
-  text-align: center;
-  font-size: 14px;
+  margin-top:5px;
+  font-size: 16px;
 }
 
 .title{
@@ -63,6 +80,8 @@ body {
   font-weight: 800;
   color: black;
   text-align: center;
+  padding-bottom:5px;
+  font-size:1.5em;
 }
 
 a {
@@ -71,12 +90,11 @@ a {
 }
 
 #credits {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
   font-size: 14px;
   text-align: right;
+  padding:15px;
 }
+
 
 #improve {
   position: fixed;
@@ -86,42 +104,41 @@ a {
 }
 
 .note {
-  float: right;
-  clear: both;
   font-size: 12px;
-  margin: 25px -20px 0 0; 
-  width: 150px;
+  margin-bottom:10px;
   font-style: italic;
   color: #666;
   text-align: right;
 }
 
 .main {
-  margin: 80px auto;
-  width: 750px;
+  margin-top: 80px;
 }
-
+.pingdom-container {
+  text-align: center;
+  margin-top:20px;
+}
 .pingdom {
   font-size: 15px;
   font-weight: 800;
-  float: right;
-  clear: both;
   width: 100%;
   text-align: center;
-  margin-top: -5px;
 }
+
+.status-link a{
+  font-size:1.5em;
+}
+
 /**************** twits ***********/
 #twits {
   background-color: #F4F4F2;
   color: #000;
-  padding: 10px 10px 20px 20px;
-  float: right;
+  padding: 10px;
 }
 
 #twits .content{
   font-size: 14px;
-  width: 280px;
-  height: 352px;
+  height: 409px;
   overflow: auto;
   color: #666;
 }
@@ -147,4 +164,18 @@ a {
 }
 .twit .time a:hover {
   text-decoration: underline;
+}
+.time{
+  display:inline-block;
+  margin-top:5px;
+}
+.text-italic{
+  font-style:italic;
+}
+
+/****** MEDIA QUERIES ******/
+@media (max-width : 640px) {
+  #credits{
+    text-align: center;
+  }
 }

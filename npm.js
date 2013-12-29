@@ -7,6 +7,9 @@ var connect = require('connect')
     , 'access_token_secret': process.env.access_token_secret
   }
   , tu = require('tuiter')(keys)
+  , async = require('async')
+  , _ = require('underscore')
+  , moment = require('moment')
   , samples = []
   , lastSample = []
   , dirSamples = __dirname + '/samples/'
@@ -72,25 +75,75 @@ twits.push = function (twit) {
   io.sockets.emit('twit', twit)
 }
 
+var parseTweet = function(text){
+  // Parse URIs
+  text = text.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/, function(uri){
+    var link = '<a href="'+uri+'" target="_blank">'+uri+'</a>'
+    var len = uri.length
+    var lastChar = uri.substring(len-1, len);
+    if(lastChar == '.'){
+      uri = uri.substring(0, len-1)
+      link = '<a href="'+uri+'" target="_blank">'+uri+'</a>.'
+    }
+    
+    return link
+  });
+  
+  // Parse Twitter usernames
+  text = text.replace(/[@]+[A-Za-z0-9-_]+/g, function(u){
+    var username = u.replace("@", "")
+    return '<a href="http://twitter.com/' + username + '" target="_blank">'+u+'</a>'
+  })
+  
+  // Parse Twitter hash tags
+  text = text.replace(/[#]+[A-Za-z0-9-_]+/g, function(t){
+    var tag = t.replace("#", "%23")
+    return '<a href="http://twitter.com/search?q=' + tag + '" target="_blank">'+t+'</a>'
+  })
+
+  return text;
+};
+
 var extractTweet = function (tweet) {
   return {
       screen_name: tweet.user.screen_name
     , id: tweet.id 
-    , text: tweet.text 
+    , text: parseTweet(tweet.text)
     , profile_image_url: tweet.user.profile_image_url
+    , created_at: tweet.created_at
   }
 }
 
 // Get the last 20 twits
 function getTwits () {
   console.log('refreshing tweets');
-  tu.userTimeline({screen_name: 'npmjs'}, function (er, res) {
-    if (er) console.log(er)
-
-    twits = []
-    res.forEach(function (tweet) {
-      twits.unshift(extractTweet(tweet))
-    })
+  twits = []
+  async.series([
+    function(cb){
+      tu.userTimeline({screen_name: ['npmjs']}, function (er, res) {
+        if (er) console.log(er)
+        res.forEach(function (tweet) {
+          twits.unshift(extractTweet(tweet))
+        });
+       cb();
+      });
+    },
+    function(cb){
+      tu.userTimeline({screen_name: ['iriscouch']}, function (er, res) {
+        if (er) console.log(er)
+        res.forEach(function (tweet) {
+          twits.unshift(extractTweet(tweet))
+        });
+        cb();
+      });
+    }
+  ], function(){
+    //done
+    // sort tweets by creation time
+    // console.log('DONE')
+    twits = _.sortBy(twits, function(obj){ return moment(obj.created_at).unix(); });
+    // console.log(twits)
+    io.sockets.emit('twit', twits) 
   })
 }
 
@@ -99,14 +152,15 @@ setInterval(getTwits, 5 * 60 * 1000);
 getTwits()
 
 // Connect a stream for incomming tweets 
-tu.filter({follow: [timeline]}, function (stream) {
-  stream.on('tweet', function (tweet) {
-    if(!tweet.user) return console.log(tweet)
-    if(tweet.user.id === timeline) 
-      twits.push(extractTweet(tweet))
-  })
+// tu.filter({follow: [timeline]}, function (stream) {
+//   stream.on('tweet', function (tweet) {
+//     console.log('TWEET TWEEET')
+//     if(!tweet.user) return console.log(tweet)
+//     if(tweet.user.id === timeline) 
+//       twits.push(extractTweet(tweet))
+//   })
 
-  stream.on('error', function (err) {
-    console.log('Error on tweeter stream: ', err, arguments)
-  })
-})
+//   stream.on('error', function (err) {
+//     console.log('Error on tweeter stream: ', err, arguments)
+//   })
+// })
