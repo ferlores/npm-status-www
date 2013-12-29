@@ -5,7 +5,6 @@ $(document).ready(function () {
   })
 
   socket.on('twit', function (data) {
-    console.log('twit')
     if (!$.isArray(data)) data = [data]
     $content = $('#twits .content');
     $content.html('')

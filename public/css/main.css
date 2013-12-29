@@ -18,27 +18,17 @@ body {
 }
 
 #logo img{
-  /*width: 400px;*/
   margin:0 auto;
 }
-
-#logo{
-  /*float: left;*/
-}
-
 #statusbox {
-  /*width: 360px;*/
   min-height: 185px;
   margin: 60px 0 10px 0;
   padding: 10px 20px;
   background-color: #F4F4F2;
-  /*float: left;*/
-  /*clear: left;*/
+
 }
 
 #registry, #website  {
-  /*float: left;*/
-  /*width: 160px;*/
   margin-top: 15px;
   text-align:left;
   font-size:1em;
@@ -60,21 +50,18 @@ body {
   font-size:1.8em;
 }
 .pending .icon{
-  /*background: url('/img/yellow.png') no-repeat 12px 10px;*/
   color:#CCCB30;
 }
 .pending .icon:before {
   content: "\e602";
 }
 .ok .icon{
-  /*background: url('/img/green.png') no-repeat 12px 10px;*/
   color:#3FCC30;
 }
 .ok .icon:before {
   content: "\e600";
 }
 .fail .icon {
-  /*background: url('/img/red.png') no-repeat 12px 10px;*/
   color:#CB3837;
   font-size:1.4em;
   margin-top:6px;
@@ -117,12 +104,8 @@ a {
 }
 
 .note {
-  /*float: right;*/
-  /*clear: both;*/
   font-size: 12px;
   margin-bottom:10px;
-  /*margin: 25px -20px 0 0; */
-  /*width: 150px;*/
   font-style: italic;
   color: #666;
   text-align: right;
@@ -130,7 +113,6 @@ a {
 
 .main {
   margin-top: 80px;
-  /*width: 750px;*/
 }
 .pingdom-container {
   text-align: center;
@@ -139,11 +121,8 @@ a {
 .pingdom {
   font-size: 15px;
   font-weight: 800;
-  /*float: right;*/
-  /*clear: both;*/
   width: 100%;
   text-align: center;
-  /*margin-top: -5px;*/
 }
 
 .status-link a{
@@ -155,12 +134,10 @@ a {
   background-color: #F4F4F2;
   color: #000;
   padding: 10px;
- /* float: right;*/
 }
 
 #twits .content{
   font-size: 14px;
-  /*width: 280px;*/
   height: 409px;
   overflow: auto;
   color: #666;
@@ -200,8 +177,5 @@ a {
 @media (max-width : 640px) {
   #credits{
     text-align: center;
-  }
-  #website, #registry{
-    /*text-align: center*/
   }
 }
