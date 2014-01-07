@@ -122,7 +122,8 @@ a {
   font-size: 14px;
   width: 280px;
   height: 352px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   color: #666;
 }
 
@@ -147,4 +148,12 @@ a {
 }
 .twit .time a:hover {
   text-decoration: underline;
+}
+
+.twit .createdAt {
+  display: block;
+  text-align: right;
+  color: #AAA;
+  font-size: 0.85em;
+  margin-top: 0.3em;
 }

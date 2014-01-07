@@ -38,7 +38,9 @@ function renderTwit(twit) {
   html += '<img  " src="' + twit.profile_image_url + '" />'
   html += '<p class="text"><span class="username"><a href="https://twitter.com/' + twit.screen_name + '"target=_blank rel="external">' + twit.screen_name + '</a>:</span> '
   html += twit.text
-  html += '</p></div>'
+  html += '<span class="createdAt">'
+  html += moment(twit.created_at).format('HH:mma on MMM Do YYYY')
+  html += '</span></p></div>'
   return html
 }
 
