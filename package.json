@@ -12,10 +12,10 @@
     "connect": "~2.4.6",
     "socket.io": "~0.9.10",
     "request": "~2.11.4",
-    "tuiter": "0.2.2",
+    "tuiter": "0.2.10",
     "async": "~0.2.9",
     "underscore": "~1.5.2",
-    "moment": "~2.4.0"
+    "moment": "~2.5.0"
   },
   "devDependencies": {},
   "scripts": {

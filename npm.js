@@ -14,7 +14,11 @@ var connect = require('connect')
   , lastSample = []
   , dirSamples = __dirname + '/samples/'
   , interval = 5 * 60 * 1000
-  , timeline = 309528017 // @npmjs
+  , timelines = {
+    npmjs: 309528017
+  , iriscouch: 270375368
+  }
+
 
   
 /*****************************************************************************/
@@ -107,6 +111,7 @@ var parseTweet = function(text){
 var extractTweet = function (tweet) {
   return {
       screen_name: tweet.user.screen_name
+    , created_at: tweet.created_at
     , id: tweet.id 
     , text: parseTweet(tweet.text)
     , profile_image_url: tweet.user.profile_image_url
@@ -117,45 +122,41 @@ var extractTweet = function (tweet) {
 function getTwits () {
   console.log('refreshing tweets');
   twits = []
-  async.series([
-    function(cb){
-      tu.userTimeline({screen_name: ['npmjs']}, function (er, res) {
-        if (er) console.log(er)
-        res.forEach(function (tweet) {
-          twits.unshift(extractTweet(tweet))
-        });
-       cb();
+  var processes = []
+
+  function getTwitsFromTimeline(timeline, cb) {
+    tu.userTimeline({screen_name: [timeline]}, function (er, res) {
+      if (er) console.log(er)
+      res.forEach(function (tweet) {
+        twits.unshift(extractTweet(tweet))
       });
-    },
-    function(cb){
-      tu.userTimeline({screen_name: ['iriscouch']}, function (er, res) {
-        if (er) console.log(er)
-        res.forEach(function (tweet) {
-          twits.unshift(extractTweet(tweet))
-        });
-        cb();
-      });
-    }
-  ], function(){
-    //done
+     if (cb) cb();
+    });
+  }
+
+  _.keys(timelines).forEach(function (timeline) {
+    processes.push(function (cb) {
+      getTwitsFromTimeline(timeline , cb)
+    })
+  })
+
+  async.parallel(processes, function(){
     // sort tweets by creation time
-    // console.log('DONE')
-    twits = _.sortBy(twits, function(obj){ return moment(obj.created_at).unix(); });
-    // console.log(twits)
-    io.sockets.emit('twit', twits) 
+    twits = _.sortBy(twits, function(obj){ return moment(obj.created_at).unix() })
+    io.sockets.emit('flushTwits', twits) 
   })
 }
 
-// refresh twits every 5 minutes
+// refresh twits every 5 minutes, prevents timeline stalling
 setInterval(getTwits, 5 * 60 * 1000);
 getTwits()
 
 // Connect a stream for incomming tweets 
-// tu.filter({follow: [timeline]}, function (stream) {
+// tu.filter({follow: _.values(timelines)}, function (stream) {
 //   stream.on('tweet', function (tweet) {
 //     console.log('TWEET TWEEET')
 //     if(!tweet.user) return console.log(tweet)
-//     if(tweet.user.id === timeline) 
+//     if(tweet.user.id === timeline)
 //       twits.push(extractTweet(tweet))
 //   })
 
