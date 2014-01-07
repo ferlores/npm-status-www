@@ -14,6 +14,7 @@ var connect = require('connect')
   , lastSample = []
   , dirSamples = __dirname + '/samples/'
   , interval = 5 * 60 * 1000
+  , twits
   , timelines = {
     npmjs: 309528017
   , iriscouch: 270375368
@@ -72,12 +73,6 @@ io.sockets.on('connection', function (socket) {
 
   socket.emit('twit', twits)  
 })
-
-var twits = []
-twits.push = function (twit) {
-  Array.prototype.push.call(this, twit)
-  io.sockets.emit('twit', twit)
-}
 
 var parseTweet = function(text){
   // Parse URIs
@@ -152,15 +147,15 @@ setInterval(getTwits, 5 * 60 * 1000);
 getTwits()
 
 // Connect a stream for incomming tweets 
-// tu.filter({follow: _.values(timelines)}, function (stream) {
-//   stream.on('tweet', function (tweet) {
-//     console.log('TWEET TWEEET')
-//     if(!tweet.user) return console.log(tweet)
-//     if(tweet.user.id === timeline)
-//       twits.push(extractTweet(tweet))
-//   })
+tu.filter({follow: _.values(timelines)}, function (stream) {
+  stream.on('tweet', function (tweet) {
+    tweet = extractTweet(tweet)
+    console.log('TWEET recieved')
+    twits.push(tweet)
+    io.sockets.emit('twit', tweet) 
+  })
 
-//   stream.on('error', function (err) {
-//     console.log('Error on tweeter stream: ', err, arguments)
-//   })
-// })
+  stream.on('error', function (err) {
+    console.log('Error on tweeter stream: ', err, arguments)
+  })
+})

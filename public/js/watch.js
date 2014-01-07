@@ -4,16 +4,23 @@ $(document).ready(function () {
     updateStatus(data)
   })
 
-  socket.on('twit', function (data) {
-    console.log('twit')
-    if (!$.isArray(data)) data = [data]
-    $content = $('#twits .content');
+  socket.on('flushTwits', function (data) {
+    console.log('flush twits')
     $content.html('')
-    $.each(data, function (idx, twit) {
-       $content.prepend($(renderTwit(twit)))
-    })
+    twitHandler(data)
   })
+
+  socket.on('twit', twitHandler)
 })
+
+function twitHandler(data) {
+  if (!$.isArray(data)) data = [data]
+  $content = $('#twits .content')
+  $.each(data, function (idx, twit) {
+    console.log('twit')
+    $content.prepend(renderTwit(twit))
+  })  
+}
 
 function updateStatus (data) {
   var elem = $('#' + data.action)
@@ -21,17 +28,17 @@ function updateStatus (data) {
     , ago = Math.round( (Date.now()/1000 - data.time) / 60)
 
   elem.addClass(className)
-  elem.find('.status').html('<p>Last update:<br>' + ago + ' minutes ago</p><p>' + 
+  elem.find('.status').html('<p>Last update:<br>' + ago + ' minutes ago</p><p>' +
     'Request: ' + Math.round(data.timeElapsed*100)/100 + 's</p>')
 }
 
 function renderTwit(twit) {
-  var html = '<div class="twit twit-' + twit.id + '">';
+  var html = '<div class="twit twit-' + twit.id + '">'
 
-  html += '<img  " src="' + twit.profile_image_url + '" />';
-  html += '<p class="text"><span class="username"><a href="https://twitter.com/' + twit.screen_name + '"target=_blank rel="external">' + twit.screen_name + '</a>:</span> ';
-  html += twit.text;
-  html += '</p></div>';
-  return html;
+  html += '<img  " src="' + twit.profile_image_url + '" />'
+  html += '<p class="text"><span class="username"><a href="https://twitter.com/' + twit.screen_name + '"target=_blank rel="external">' + twit.screen_name + '</a>:</span> '
+  html += twit.text
+  html += '</p></div>'
+  return html
 }
 
